@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170607135222) do
+ActiveRecord::Schema.define(version: 20170607145959) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "cep"
+    t.string "district"
+    t.string "number"
+    t.string "complement"
+    t.integer "addressable_id"
+    t.string "addressable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "lat"
+    t.float "lng"
+    t.integer "city_id"
+    t.index ["city_id"], name: "index_addresses_on_city_id"
+  end
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
@@ -20,12 +35,29 @@ ActiveRecord::Schema.define(version: 20170607135222) do
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "image"
     t.string "imageable_id"
     t.string "imageable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "parkings", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_parkings_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -44,6 +76,15 @@ ActiveRecord::Schema.define(version: 20170607135222) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.integer "parking_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "hour"
+    t.float "price"
+    t.index ["parking_id"], name: "index_prices_on_parking_id"
   end
 
   create_table "states", force: :cascade do |t|
@@ -69,6 +110,15 @@ ActiveRecord::Schema.define(version: 20170607135222) do
     t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vagances", force: :cascade do |t|
+    t.integer "status"
+    t.integer "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "parking_id"
+    t.index ["parking_id"], name: "index_vagances_on_parking_id"
   end
 
 end
