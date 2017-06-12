@@ -15,4 +15,20 @@ class User < ApplicationRecord
     def role_add
     	self.role = 2
     end
+
+  def ensure_authentication_token
+    if token.blank?
+    self.token=generate_authentication_token
+  end
+
+  end
+
+  def self.generate_authentication_token
+    loop do 
+      token=Devise.friendly_token
+      break token unless User.find_by(token: token) 
+  end
+
+  end
+
 end

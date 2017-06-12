@@ -48,4 +48,18 @@ RSpec.describe "Parkings", type: :request do
  			end
  		end
   end
+
+  describe "POST /parkings" do
+  	
+  end
+
+
+  describe "PUT /parkings/:id" do
+  	
+  end
+
+  describe 'DELETE /parkings/:id' do
+    
+  end
+
 end

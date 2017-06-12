@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   namespace :api do
   	resources :parkings
   	resources :users
+
+  	post '/sign_in' => 'sessions#sign_in'
+  	post '/sign_up' => 'sessions#sign_up'
   end
 end
