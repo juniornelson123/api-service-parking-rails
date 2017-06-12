@@ -45,6 +45,17 @@ class Api::ParkingsController < ApiController
     end
   end
 
+
+  def add_vagancies
+    @vagance = Vagance.new(vagancie_params)
+
+    if @vagance.save
+      render json: @vagance
+    else
+      render json: @vagancie.errors, status: :unprocessable_entity
+    end
+  end
+
   # PATCH/PUT /parkings/1
   def update
     if @parking.update(parking_params)
@@ -76,5 +87,9 @@ class Api::ParkingsController < ApiController
 
     def address_params
       params.require(:address).permit!
+    end
+
+    def vagancie_params
+      params.require(:vagancie).permit!
     end
 end
