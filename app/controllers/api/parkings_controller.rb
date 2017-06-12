@@ -1,6 +1,6 @@
 class Api::ParkingsController < ApiController
   before_action :set_parking, only: [:show, :update, :destroy]
-  before_action :authenticate, only: [:index]
+  before_action :authenticate, only: [:create, :update, :delete]
   # GET /parkings
   def index
     @parkings = Parking.all
@@ -10,12 +10,15 @@ class Api::ParkingsController < ApiController
 
   # GET /parkings/1
   def show
-    render json: @parking
+    render json: @parking.to_json(
+               include: {
+                 user: { only: [:email, :name]}
+               }) 
   end
-
   # POST /parkings
   def create
     @parking = Parking.new(parking_params)
+    
 
     if @parking.save
       render json: @parking, status: :created
