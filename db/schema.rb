@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170612135423) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "addresses", force: :cascade do |t|
     t.string "cep"
     t.string "district"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20170612135423) do
     t.datetime "updated_at", null: false
     t.float "lat"
     t.float "lng"
-    t.integer "city_id"
+    t.bigint "city_id"
     t.index ["city_id"], name: "index_addresses_on_city_id"
   end
 
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170612135423) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "state_id"
+    t.bigint "state_id"
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
@@ -54,18 +57,18 @@ ActiveRecord::Schema.define(version: 20170612135423) do
   create_table "parkings", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_parkings_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "plan_id"
+    t.bigint "plan_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_expire"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["plan_id"], name: "index_payments_on_plan_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
@@ -79,7 +82,7 @@ ActiveRecord::Schema.define(version: 20170612135423) do
   end
 
   create_table "prices", force: :cascade do |t|
-    t.integer "parking_id"
+    t.bigint "parking_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "hour"
@@ -118,8 +121,15 @@ ActiveRecord::Schema.define(version: 20170612135423) do
     t.integer "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "parking_id"
+    t.bigint "parking_id"
     t.index ["parking_id"], name: "index_vagances_on_parking_id"
   end
 
+  add_foreign_key "addresses", "cities"
+  add_foreign_key "cities", "states"
+  add_foreign_key "parkings", "users"
+  add_foreign_key "payments", "plans"
+  add_foreign_key "payments", "users"
+  add_foreign_key "prices", "parkings"
+  add_foreign_key "vagances", "parkings"
 end
