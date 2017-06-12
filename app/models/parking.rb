@@ -6,6 +6,7 @@ class Parking < ApplicationRecord
   has_one :address, as: :addressable, dependent: :destroy
   has_many :prices
   has_many :vagances
+  accepts_nested_attributes_for :address
 
   validates_presence_of [:name,:description]
 
