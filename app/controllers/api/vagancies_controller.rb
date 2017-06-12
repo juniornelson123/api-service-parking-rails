@@ -19,13 +19,13 @@ class Api::VaganciesController < ApplicationController
       
       number = Vagance.where(parking_id: params[:vagance][:parking_id]).last
       if number != nil
-        @vagance = Vagance.create!(number: i, parking_id: params[:vagance][:parking_id])
-      else
-        i = i+number
-        @vagance = Vagance.create!(number: i, parking_id: params[:vagance][:parking_id])
-
+        unless i == (number.number+1)
+          i = 1 + number.number
+        end
       end
+      @vagance = Vagance.create!(number: i, parking_id: params[:vagance][:parking_id])
 
+     
     end  
     @vagances = Vagance.where(parking_id: params[:vagance][:parking_id])
     render json: @vagances, status: :created
