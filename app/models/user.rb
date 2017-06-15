@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	
+  enum role:{customer: 1, admin: 2}	
   has_one :parking
 	has_many :payments
 	has_many :images, as: :imageable, dependent: :destroy
@@ -13,7 +13,7 @@ class User < ApplicationRecord
 	before_create :role_add
 
     def role_add
-    	self.role = 2
+    	self.role = 1
     end
 
   def ensure_authentication_token

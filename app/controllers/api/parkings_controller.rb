@@ -6,6 +6,8 @@ class Api::ParkingsController < ApiController
     @parkings = Parking.all
 
     render json: @parkings.to_json( include: { 
+        prices: { only: [:hour, :price] },
+        vagances: { only: [:number, :status] },
         address: { include: {
           city: { :only => [:id, :name], include: {
             state: {only: [:id,:name]}}
@@ -19,6 +21,7 @@ class Api::ParkingsController < ApiController
   # GET /parkings/1
   def show
     render json: @parking.to_json( include: { 
+        vagances: { only: [:number, :status] }, 
         address: { include: {
           city: { :only => [:id, :name], include: {
             state: {only: [:id,:name]}}

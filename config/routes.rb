@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   	resources :users
 
+  	get 'prices/parking/:parking_id' => 'prices#index' 
+  	get 'prices/:id' => 'prices#show'
+  	post 'prices' => 'prices#create'
+  	put 'prices/:id' => 'prices#update'
+  	delete 'prices/:id' => 'prices#destroy'
+
   	get 'vagancies/parking/:parking_id' => 'vagancies#index' 
   	get 'vagancies/:id' => 'vagancies#show'
   	post 'vagancies' => 'vagancies#create'
