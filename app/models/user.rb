@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_one :parking
 	has_many :payments
 	has_many :images, as: :imageable, dependent: :destroy
+
+  mount_base64_uploader :images, ImageUploader
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

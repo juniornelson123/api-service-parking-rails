@@ -1,6 +1,7 @@
 class Parking < ApplicationRecord
 	enum status: { active: 1, disabled: 2, inactive: 3 }
-
+  has_many :images, as: :imageable, dependent: :destroy
+  mount_base64_uploader :images, ImageUploader
 
   belongs_to :user
   has_one :address, as: :addressable, dependent: :destroy

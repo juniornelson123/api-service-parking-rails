@@ -25,10 +25,8 @@ class Api::SessionsController < ApplicationController
 		if @user.save
 			
 			@user.update_column(:token, User.generate_authentication_token)
-			render json:{
-				user: @user,
-		        access_token: @user.token
-			}
+			 render json: @user.to_json( include: { parking: { except: [:created_at] }})
+	     
 		else
 			render :status => 401, json: {
 	          success: false,

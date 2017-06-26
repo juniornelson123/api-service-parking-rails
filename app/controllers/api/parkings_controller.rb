@@ -53,11 +53,11 @@ class Api::ParkingsController < ApiController
       if @address.save!
         render json: @parking, include: :address, status: :created
       else
-        render json: @parking.errors, status: :unprocessable_entity
+        render json: @address.errors, status: :unprocessable_entity
       end
 
     else  
-        render json: @address.errors, status: :unprocessable_entity
+        render json: @parking.errors, status: :unprocessable_entity
     end
   end
 
