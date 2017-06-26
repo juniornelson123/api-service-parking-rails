@@ -47,6 +47,7 @@ class Api::ParkingsController < ApiController
   # POST /parkings
   def create
     @parking = Parking.new(parking_params)
+    @parking.images.build(images_params)
     if @parking.save!
       @address = Address.new(address_params)
       @address.addressable = @parking
@@ -103,6 +104,10 @@ class Api::ParkingsController < ApiController
 
     def address_params
       params.require(:address).permit!
+    end
+
+    def images_params
+      params.require(:images).permit!
     end
 
     def vagancie_params
