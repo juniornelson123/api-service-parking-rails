@@ -7,10 +7,8 @@ class Api::SessionsController < ApplicationController
 	      @user.update_column(:token, User.generate_authentication_token)
 	      warden.set_user @user
 
-	      render json: {
-	        user: @user,
-	        access_token: @user.token
-	      }
+	      render json: @user.to_json( include: { parking: { except: [:created_at] }})
+	      
 	      
 
 	    else

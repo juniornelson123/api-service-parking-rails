@@ -2,6 +2,19 @@ class Api::ParkingsController < ApiController
   before_action :set_parking, only: [:show, :update, :destroy]
   before_action :authenticate, only: [:create, :update, :delete]
   # GET /parkings
+
+  def getCities
+    @cities = City.order(name: :asc).where(state_id: params[:id])
+
+    render json: @cities
+  end
+
+  def getStates
+    @states = State.all.order(name: :asc)
+
+    render json: @states
+  end
+  
   def index
     @parkings = Parking.all
 
